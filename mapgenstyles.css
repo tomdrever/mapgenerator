@@ -1,11 +1,17 @@
-#canvascontainer {
+#canvas-container {
+  position: relative;
   display: flex;
-  justify-content:center;
-  align-items:center;
+  justify-content: center;
 }
 
 #canvas {
-  width: 24em;
-  height: 24em;
   background-color: gray;
+}
+
+#download-image {
+  position: absolute;
+  width: 8em;
+  height: 2em;
+  top: 0;
+  right: 2em;
 }
