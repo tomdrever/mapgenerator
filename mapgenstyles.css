@@ -1,0 +1,11 @@
+#canvascontainer {
+  display: flex;
+  justify-content:center;
+  align-items:center;
+}
+
+#canvas {
+  width: 24em;
+  height: 24em;
+  background-color: gray;
+}
