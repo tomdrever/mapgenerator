@@ -12,17 +12,21 @@
     <h1> Map Generator </h1>
 
     <div id="map-container">
-      <canvas id="canvas" width="480em" height="480em"></canvas>
-      <button id="download-image-button" onclick="onDownloadClick()"> Download </button>
-      <button id="new-map-button" onclick="onNewMapClick()"> Generate new map </button>
+      <canvas id="canvas" title="Click to view image" onclick="onCanvasClicked()" width="580em" height="580em"></canvas>
+      <a download="image.png">
+        <button id="download-image-button" onclick="onDownloadClicked(this.parentNode)" > Download </button>
+      </a>
+      <button id="new-map-button" onclick="onNewMapClicked()"> Generate new map </button>
     </div>
 
-    <div>
+    <div id="settings-container">
       <h3> Settings </h3>
 
       <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </p>
     </div>
 
+    <script src="utils.js"></script>
     <script src="mapgen.js"></script>
+    <script src="index.js"></script>
   </body>
 </html>
