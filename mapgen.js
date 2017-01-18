@@ -13,13 +13,16 @@ function diamondSquare(DATA_SIZE) {
 
 	//an initial seed value for the corners of the data
 	var SEED = 128.0;
-	var data = [];
-	for (var i = 0; i < DATA_SIZE; ++i) {
-		data[i] = [];
+	var data = new Array(DATA_SIZE);
+	for (var i = 0; i < DATA_SIZE; i++) {
+		data[i] = new Array(DATA_SIZE);
+
+    for (var j = 0; j < DATA_SIZE; j++) {
+      data[i][j] = 0;
+    }
 	}
 	//seed the data
-	data[0][0] = data[0][DATA_SIZE - 1] = data[DATA_SIZE - 1][0] =
-        data[DATA_SIZE - 1][DATA_SIZE - 1] = SEED;
+	data[0][0] = data[0][DATA_SIZE - 1] = data[DATA_SIZE - 1][0] = data[DATA_SIZE - 1][DATA_SIZE - 1] = SEED;
 
 	var h = 128.0;//the range (-h -> +h) for the average offset
 
@@ -50,11 +53,11 @@ function diamondSquare(DATA_SIZE) {
 		        avg /= 4.0;
 
 		        //center is average plus random offset
-		        data[x + halfSide][y + halfSide] =
+		        data[x + halfSide][y + halfSide] = avg + (Math.random() * 2 * h) - h;
                 //We calculate random value in range of 2h
                 //and then subtract h so the end value is
                 //in the range (-h, +h)
-                avg + (Math.random() * 2 * h) - h;
+
 		    }
 		}
 
@@ -70,7 +73,7 @@ function diamondSquare(DATA_SIZE) {
 		    //to generate the far edge values
 		    for (var y = (x + halfSide) % sideLength; y < DATA_SIZE - 1; y += sideLength) {
 		        //x, y is center of diamond
-		        //note we must use mod  and add DATA_SIZE for subtraction 
+		        //note we must use mod  and add DATA_SIZE for subtraction
 		        //so that we can wrap around the array to find the corners
 		        var avg =
                     data[(x - halfSide + DATA_SIZE - 1) % (DATA_SIZE - 1)][y] + //left of center
@@ -104,16 +107,32 @@ function diamondSquare(DATA_SIZE) {
 
 function getGrid(size) {
   var grid = new Array(size)
-  var data = diamondSquare(10)
-  var i = 0
-  
+  var data = diamondSquare(size)
+
   for (var x = 0; x < size; x++) {
     grid[x] = new Array(size)
 
     for (var y = 0; y < size; y++) {
-      grid[x][y] = new Cell(data[i], random(1, 255), random(1, 255))
-      
-      i++
+      var color = []
+
+      var datanum = data[x][y]
+      if (datanum < 70) {
+        color = [25, 25, 255]
+      } else if (datanum < 100 && datanum >= 70) {
+        color = [76, 166, 255]
+      } else if (datanum < 120 && datanum >= 100) {
+        color = [255, 255, 102]
+      } else if (datanum < 150 && datanum >= 120) {
+        color = [50, 215, 50]
+      } else if (datanum < 180 && datanum >= 150) {
+        color = [0, 123, 0]
+      } else if (datanum < 210 && datanum >= 180) {
+        color = [49, 49, 28]
+      } else {
+        color = [38,38,38]
+      }
+
+      grid[x][y] = new Cell(color[0], color[1], color[2])
     }
   }
 
