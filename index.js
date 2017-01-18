@@ -22,6 +22,8 @@ function onCanvasClicked() {
 }
 
 function newMap() {
+  context.clearRect(0, 0, canvasWidth, canvasHeight)
+
   // TODO - get these values in settings?
   var gridSize = 513
   var cellSize = canvasWidth / gridSize
