@@ -9,7 +9,7 @@ var canvasHeight = parseInt(canvasStyle.height.replace("px", ""))
 var processing = document.getElementById("processing_wrapper")
 
 var gridSizeInput = document.getElementById("grid-size-input")
-var gridSmoothnessInput = document.getElementById("grid-smoothness-input")
+var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
 
 newMap()
 
@@ -32,11 +32,11 @@ function newMap() {
   context.clearRect(0, 0, canvasWidth, canvasHeight)
 
   var gridSize = Math.pow(2, gridSizeInput.value) + 1
-  var smoothness = gridSmoothnessInput.value;
+  var heightoffset = gridHeightOffsetInput.value;
 
   var cellSize = canvasWidth / gridSize
 
-  var grid = getGrid(gridSize, smoothness)
+  var grid = getGrid(gridSize, heightoffset)
 
   setTimeout(function() {
     for (var x = 0; x < gridSize; x++) {
