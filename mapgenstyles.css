@@ -9,6 +9,11 @@
 #settings-container {
   padding-left: 4em;
   padding-right: 4em;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column;
 }
 
 #canvas {
@@ -29,4 +34,30 @@
   height: 2em;
   font-size: 1.6rem;
   margin: 1em;
+}
+
+#processing_wrapper {
+  position:fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 5;
+
+  width: 10em;
+  margin-left: -5em;
+
+  height: 4em;
+  margin-top: -2em;
+
+  background-color: rgba(10, 10, 10, 0.5);
+  border-radius: 2em;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+
+#processing_notifictaion {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
