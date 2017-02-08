@@ -17,8 +17,11 @@
     <div id="map-container">
       <canvas id="canvas" title="Click to view image" onclick="onCanvasClicked()" width="513em" height="513em"></canvas>
       <a download="image.png">
-        <button id="download-image-button" onclick="onDownloadClicked(this.parentNode)" > Download </button>
+        <button id="download-image-button" onclick="onDownloadClicked(this.parentNode)" > Download Image </button>
       </a>
+
+      <button id="source-button" onclick="onSourceClicked()"> Source Code </buton>
+
       <button id="new-map-button" onclick="onNewMapClicked()"> Generate new map </button>
     </div>
 
@@ -27,7 +30,7 @@
 
       <div>
         <p> Resolution </p>
-        <input type="number" id="grid-size-input" class="text-input" value=7></input>
+        <input type="number" id="grid-size-input" class="text-input" value=8></input>
       </div>
 
       <div>

@@ -13,6 +13,10 @@ var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
 
 newMap()
 
+function onSourceClicked() {
+  var newWindow = window.open("https://www.github.com/tomdrever/mapgenerator", "_blank")
+}
+
 function onDownloadClicked(link) {
   link.href = canvas.toDataURL("image/png", 1.0)
 }
@@ -33,7 +37,6 @@ function newMap() {
 
   var gridSize = Math.pow(2, gridSizeInput.value) + 1
   var heightoffset = gridHeightOffsetInput.value;
-
 
   var cellSize = canvasWidth / gridSize
 

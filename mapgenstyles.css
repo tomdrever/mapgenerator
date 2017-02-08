@@ -23,9 +23,17 @@
 
 #download-image-button {
   position: absolute;
-  width: 8em;
+  width: 10em;
   height: 2em;
   top: 0;
+  right: 0;
+}
+
+#source-button {
+  position: absolute;
+  width: 10em;
+  height: 2em;
+  top: 3em;
   right: 0;
 }
 
