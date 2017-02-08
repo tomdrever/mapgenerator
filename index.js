@@ -34,6 +34,7 @@ function newMap() {
   var gridSize = Math.pow(2, gridSizeInput.value) + 1
   var heightoffset = gridHeightOffsetInput.value;
 
+
   var cellSize = canvasWidth / gridSize
 
   var grid = getGrid(gridSize, heightoffset)
