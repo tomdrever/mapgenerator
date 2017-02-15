@@ -10,6 +10,8 @@ var processing = document.getElementById("processing_wrapper")
 
 var gridSizeInput = document.getElementById("grid-size-input")
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
+var falloffGradientInput = document.getElementById("grid-falloffgradient-input")
+var falloffAreaInput = document.getElementById("grid-falloffarea-input")
 
 newMap()
 
@@ -36,19 +38,12 @@ function newMap() {
   context.clearRect(0, 0, canvasWidth, canvasHeight)
 
   var gridSize = Math.pow(2, gridSizeInput.value) + 1
-  var heightoffset = gridHeightOffsetInput.value;
+  var mapGenSettings = new MapGenSettings(gridHeightOffsetInput.value, falloffGradientInput.value, falloffAreaInput.value)
 
   var cellSize = canvasWidth / gridSize
 
-  var grid = getGrid(gridSize, heightoffset)
-
   setTimeout(function() {
-    for (var x = 0; x < gridSize; x++) {
-      for (var y = 0; y < gridSize; y++) {
-        context.fillStyle = "rgb({0}, {1}, {2})".format(grid[x][y].r, grid[x][y].g, grid[x][y].b)
-        context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
-      }
-    }
+    drawMap(context, gridSize, cellSize, mapGenSettings)
 
     processing.style.display = "none"
   }, 50)

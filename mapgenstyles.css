@@ -7,13 +7,22 @@
 }
 
 #settings-container {
-  padding-left: 4em;
-  padding-right: 4em;
+  margin: 0 auto;
+  display: table;
+}
 
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
+.settings-row {
+  display: table-row;
+}
+
+.settings-row input {
+  padding: auto;
+  margin: 1.2em;
+}
+
+.settings-row .item {
+  padding: auto;
+  display: table-cell;
 }
 
 #canvas {
