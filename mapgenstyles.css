@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 #map-container {
   position: relative;
   display: flex;
@@ -23,9 +27,10 @@
   display: table-cell;
 }
 
-#canvas {
+#image {
   background-color: gray;
   cursor: pointer;
+  image-rendering: pixelated;
 }
 
 #download-image-button {

@@ -1,10 +1,8 @@
 var canvas = document.getElementById("canvas")
 var context = canvas.getContext('2d')
+context.imageSmoothingEnabled = false;
 
 var canvasStyle = window.getComputedStyle(canvas, null)
-
-var canvasWidth = parseInt(canvasStyle.width.replace("px", ""))
-var canvasHeight = parseInt(canvasStyle.height.replace("px", ""))
 
 var processing = document.getElementById("processing_wrapper")
 
@@ -12,8 +10,9 @@ var gridSizeInput = document.getElementById("grid-size-input")
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
 var falloffGradientInput = document.getElementById("grid-falloffgradient-input")
 var falloffAreaInput = document.getElementById("grid-falloffarea-input")
+var imageElement = document.getElementById("image")
 
-newMap()
+newMap();
 
 function onSourceClicked() {
   var newWindow = window.open("https://www.github.com/tomdrever/mapgenerator", "_blank")
@@ -24,26 +23,32 @@ function onDownloadClicked(link) {
 }
 
 function onNewMapClicked() {
-  newMap()
+  newMap();
 }
 
 function onCanvasClicked() {
   var newWindow = window.open("about:blank", "_blank")
-  newWindow.document.write("<hmtl><head><title>Map Image</title><head><img src={0}></img></html>".format(canvas.toDataURL("image/png", 1.0)))
+  newWindow.document.write("<hmtl><head><title>Map Image</title><head><img style='image-rendering: pixelated; width: 100em; height: 100em;' src={0}></img></html>".format(canvas.toDataURL("image/png", 1.0)))
 }
 
 function newMap() {
+  var gridSize =  Math.pow(2, gridSizeInput.value) + 1
+
+  canvas.setAttribute('width', gridSize.toString());
+  canvas.setAttribute('height', gridSize.toString());
+
   processing.style.display = "flex"
 
-  context.clearRect(0, 0, canvasWidth, canvasHeight)
+  context.clearRect(0, 0, gridSize, gridSize)
 
-  var gridSize = Math.pow(2, gridSizeInput.value) + 1
   var mapGenSettings = new MapGenSettings(gridHeightOffsetInput.value, falloffGradientInput.value, falloffAreaInput.value)
 
-  var cellSize = canvasWidth / gridSize
+  var cellSize = 1
 
   setTimeout(function() {
-    drawMap(context, gridSize, cellSize, mapGenSettings)
+    var image = getMap(context, gridSize, cellSize, mapGenSettings)
+
+    imageElement.src = image;
 
     processing.style.display = "none"
   }, 50)

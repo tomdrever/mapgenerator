@@ -93,7 +93,7 @@ function generateDiamondSquare(DATA_SIZE, heightOffset) {
 	return data;
 }
 
-// Credit Sebastien Lague for falloffMap
+// Credit Sebastian Lague for falloffMap
 function evaluateFalloffValue(value, gradient, area) {
   // a - Lower a means more gradual fall-off
   var a = gradient
@@ -130,7 +130,7 @@ function generateFalloffMap(SIZE, gradient, area) {
   return grid
 }
 
-function drawMap(context, size, cellSize, settings) {
+function getMap(context, size, cellSize, settings) {
   var dsMap = generateDiamondSquare(size, settings.heightOffset)
   var falloffMap = generateFalloffMap(size, settings.falloffGradient, settings.falloffArea)
 
@@ -160,8 +160,10 @@ function drawMap(context, size, cellSize, settings) {
         colour = terrainMap[terrainMapKey]
         context.fillStyle = "rgb({0}, {1}, {2})".format(colour[0], colour[1], colour[2])
       }
-      
-      context.fillRect((x * cellSize) + 0.5, (y * cellSize) + 0,5, cellSize, cellSize)
+
+      context.fillRect(x * cellSize, y * cellSize , cellSize, cellSize)
     }
   }
+
+  return context.canvas.toDataURL("image/png", 1.0);
 }
