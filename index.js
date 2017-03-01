@@ -29,7 +29,7 @@ function onNewMapClicked() {
 
 function onCanvasClicked() {
   var newWindow = window.open("about:blank", "_blank")
-  newWindow.document.write("<img src={0}></img>".format(canvas.toDataURL("image/png", 1.0)))
+  newWindow.document.write("<hmtl><head><title>Map Image</title><head><img src={0}></img></html>".format(canvas.toDataURL("image/png", 1.0)))
 }
 
 function newMap() {

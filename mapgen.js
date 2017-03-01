@@ -158,11 +158,10 @@ function drawMap(context, size, cellSize, settings) {
 
       if (colour != terrainMap[terrainMapKey]) {
         colour = terrainMap[terrainMapKey]
-        console.log(terrainMapKey)
         context.fillStyle = "rgb({0}, {1}, {2})".format(colour[0], colour[1], colour[2])
       }
       
-      context.fillRect(x * cellSize, y * cellSize, cellSize, cellSize)
+      context.fillRect((x * cellSize) + 0.5, (y * cellSize) + 0,5, cellSize, cellSize)
     }
   }
 }

@@ -16,12 +16,10 @@
 }
 
 .settings-row input {
-  padding: auto;
   margin: 1.2em;
 }
 
 .settings-row .item {
-  padding: auto;
   display: table-cell;
 }
 
