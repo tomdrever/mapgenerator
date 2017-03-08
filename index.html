@@ -9,14 +9,13 @@
   </head>
 
   <body>
-    <canvas id="canvas" style="position: absolute; right: -100em; image-rendering: pixelated;"></canvas>
-
     <div id="processing_wrapper"><p id="processing_notifictaion"> Processing... </p></div>
 
     <h1> Map Generator </h1>
 
     <div id="map-container">
-      <img id="image" title"Click To View Image" onclick="onCanvasClicked()" width="514" height="514"></img>
+      <image id="image" title"Click To View Image" onclick="onCanvasClicked()" width="514" height="514"></image>
+
       <a download="image.png">
         <button id="download-image-button" onclick="onDownloadClicked(this.parentNode)" > Download Image </button>
       </a>
@@ -50,6 +49,7 @@
       </div>
     </div>
 
+    <script src="bitmap.js"></script>
     <script src="utils.js"></script>
     <script src="mapgen.js"></script>
     <script src="index.js"></script>
