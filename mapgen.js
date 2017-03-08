@@ -130,13 +130,14 @@ function generateFalloffMap(size, gradient, area) {
   return grid
 }
 
-function getMap(size, settings) {
+function getMap(context, size, settings) {
   var dsMap = generateDiamondSquare(size, settings.heightOffset)
   var falloffMap = generateFalloffMap(size, settings.falloffGradient, settings.falloffArea)
 
-  var bitmap = new Bitmap(size  * 4, size * 4);
-
   var colour = [31, 3, 168];
+
+  var imageData = context.getImageData(0, 0, size, size);
+  var buffer = new Uint8ClampedArray(size * size * 4);
 
   for (var x = 0; x < size; x++) {
     for (var y = 0; y < size; y++) {
@@ -160,15 +161,21 @@ function getMap(size, settings) {
         colour = terrainMap[terrainMapKey]
       }
 
-      bitmap.pixel[x][y] = [colour[0] / 256, colour[1] / 256, colour[2] / 256, 1];
+      setBufferColourAtPosition(buffer, colour, x, y, size);
     }
   }
 
-  
+  imageData.data.set(buffer);
 
-  bitmap.subsample(4);
+  context.putImageData(imageData, 0, 0);
+}
 
-  console.log(bitmap.pixel)
+function setBufferColourAtPosition(buffer, colour, x, y, size) {
+  var pos = (y * size + x) * 4;
 
-  return bitmap.dataURL();
+  for (var i = 0; i < 3; i++) {
+    buffer[pos + i] = colour[i];
+  }
+
+  buffer[pos + 3] = 255;
 }

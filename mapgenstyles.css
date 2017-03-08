@@ -27,6 +27,12 @@ body {
   display: table-cell;
 }
 
+#canvas {
+  background-color: gray;
+  cursor: pointer;
+  image-rendering: pixelated;
+}
+
 #image {
   background-color: gray;
   cursor: pointer;
