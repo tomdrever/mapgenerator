@@ -1,8 +1,9 @@
 class MapGenSettings {
-  constructor(heightOffset, falloffGradient, falloffArea) {
+  constructor(heightOffset, falloffGradient, falloffArea, gradientMode) {
     this.heightOffset = heightOffset
     this.falloffGradient = falloffGradient
     this.falloffArea = falloffArea
+    this.gradientMode = gradientMode
   }
 }
 
@@ -135,6 +136,7 @@ function getMap(context, size, settings) {
   var falloffMap = generateFalloffMap(size, settings.falloffGradient, settings.falloffArea)
 
   var colour = [31, 3, 168];
+  var oldHeightKey = 0.05;
 
   var imageData = context.getImageData(0, 0, size, size);
   var buffer = new Uint8ClampedArray(size * size * 4);
@@ -161,7 +163,18 @@ function getMap(context, size, settings) {
         colour = terrainMap[terrainMapKey]
       }
 
-      setBufferColourAtPosition(buffer, colour, x, y, size);
+      if (settings.gradientMode) {
+        // New colour; change in height.
+        if (terrainMapKey != oldHeightKey) {
+          setBufferColourAtPosition(buffer, [0, 0, 0], x, y, size);
+        } else {
+          setBufferColourAtPosition(buffer, [255, 255, 255], x, y, size);
+        }
+      } else {
+        setBufferColourAtPosition(buffer, colour, x, y, size);
+      }
+
+      oldHeightKey = terrainMapKey;
     }
   }
 

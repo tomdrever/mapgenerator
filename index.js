@@ -9,6 +9,7 @@ var gridSizeInput = document.getElementById("grid-size-input")
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
 var falloffGradientInput = document.getElementById("grid-falloffgradient-input")
 var falloffAreaInput = document.getElementById("grid-falloffarea-input")
+var gradientModeInput = document.getElementById("grid-gradientmode-input")
 
 newMap();
 
@@ -36,7 +37,7 @@ function newMap() {
   canvas.setAttribute("width", gridSize);
   canvas.setAttribute("height", gridSize);
 
-  var mapGenSettings = new MapGenSettings(gridHeightOffsetInput.value, falloffGradientInput.value, falloffAreaInput.value)
+  var mapGenSettings = new MapGenSettings(gridHeightOffsetInput.value, falloffGradientInput.value, falloffAreaInput.value, gradientModeInput.checked)
 
   setTimeout(function() {
     getMap(context, gridSize, mapGenSettings);
