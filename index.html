@@ -10,7 +10,7 @@
 
   <body>
     <div id="processing_wrapper"><p id="processing_notifictaion"> Processing... </p></div>
-    <canvas id="canvas" style="position: absolute; right: -100em;"></canvas>
+    <canvas id="canvas" style="position: absolute; right: -1000em;"></canvas>
 
     <h1> Map Generator </h1>
 
@@ -31,7 +31,7 @@
 
       <div class="settings-row">
         <p class="item"> Resolution </p>
-        <input class="item" type="number" id="grid-size-input" class="text-input" value=8>
+        <input class="item" type="number" id="grid-size-input" value=8 min=6 max=16 >
       </div>
 
       <div class="settings-row">
@@ -50,7 +50,7 @@
       </div>
 
       <div class="settings-row">
-        <p class="item"> Gradient mode</p>
+        <p class="item"> Show contour lines</p>
         <input class="item" type="checkbox" id="grid-gradientmode-input" checked="false">
       </div>
       
