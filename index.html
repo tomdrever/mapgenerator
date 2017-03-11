@@ -9,8 +9,7 @@
   </head>
 
   <body>
-    <div id="processing_wrapper"><p id="processing_notifictaion"> Processing... </p></div>
-    <canvas id="canvas" style="position: absolute; right: -1000em;"></canvas>
+    <canvas id="canvas" style="position: absolute; right: -9999em;"></canvas>
     
     <div id="toolbar">
       <h1> Map Generator </h1>
@@ -24,8 +23,11 @@
 
     <div id="wrapper">
       <div id="map-container">
-        <img id="image" title"Click To View Image" onclick="onCanvasClicked()" width="514" height="514"></img>
-        <img id="new-map-button" src="img/new.png" onclick="onNewMapClicked()"></img>
+        <img id="image" title"Click To View Image" onclick="onCanvasClicked()"></img>
+
+        <div id="new-map-wrapper">
+          <img id="new-map-button" src="img/new.png" onclick="onNewMapClicked()"></img>
+        </div>
       </div>
 
       <div id="settings-container">

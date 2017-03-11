@@ -1,9 +1,7 @@
 var canvas = document.getElementById("canvas");
 var context = canvas.getContext('2d');
 
-var image = document.getElementById("image"); 
-
-var processing = document.getElementById("processing_wrapper")
+var image = document.getElementById("image");
 
 var gridSizeInput = document.getElementById("grid-size-input")
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
@@ -33,7 +31,7 @@ function onCanvasClicked() {
 function newMap() {
   var gridSize =  Math.pow(2, gridSizeInput.value) + 1
 
-  processing.style.display = "flex"
+  document.getElementById("new-map-button").className = "loading";
   canvas.setAttribute("width", gridSize);
   canvas.setAttribute("height", gridSize);
 
@@ -43,6 +41,6 @@ function newMap() {
     getMap(context, gridSize, mapGenSettings);
     image.src = canvas.toDataURL(); 
 
-    processing.style.display = "none";
+    document.getElementById("new-map-button").className = "";
   }, 50)
 }

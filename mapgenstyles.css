@@ -9,6 +9,7 @@ html, body {
 body {
   font-family: 'Roboto Condensed', sans-serif;
   overflow-x: hidden;
+  overflow-y: hidden;
 
   max-width: none !important;
   background-color: #f6f6f6;
@@ -107,6 +108,9 @@ body {
 }
 
 #image {
+  width: 28em;
+  height: 28em;
+
   background-color: gray;
   cursor: pointer;
   image-rendering: pixelated;
@@ -125,6 +129,27 @@ body {
 #new-map-button {
   width: 2.4em;
   height: 2.4em;
+}
+
+.loading {
+  -webkit-animation-name: rotate; 
+  -webkit-animation-duration: 0.5s; 
+  -webkit-animation-iteration-count: infinite;
+  -webkit-transition-timing-function: linear;
+}
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to { 
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+#new-map-wrapper {
+  width: 2.4em;
+  height: 2.4em;
   
   border-radius: 1.6em;
   padding: 0.4em;
@@ -136,30 +161,4 @@ body {
   position: absolute;
   right: -1.6em;
   bottom: 1em;
-}
-
-#processing_wrapper {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 5;
-
-  width: 10em;
-  margin-left: -5em;
-
-  height: 4em;
-  margin-top: -2em;
-
-  background-color: rgba(10, 10, 10, 0.5);
-  border-radius: 2em;
-
-  display: none;
-  justify-content: center;
-  align-items: center;
-}
-
-#processing_notifictaion {
-  color: white;
-  font-size: 1.8rem;
-  font-weight: bold;
 }
