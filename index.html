@@ -11,49 +11,53 @@
   <body>
     <div id="processing_wrapper"><p id="processing_notifictaion"> Processing... </p></div>
     <canvas id="canvas" style="position: absolute; right: -1000em;"></canvas>
-
-    <h1> Map Generator </h1>
-
-    <div id="map-container">
-      <image id="image" title"Click To View Image" onclick="onCanvasClicked()" width="514" height="514"></image>
+    
+    <div id="toolbar">
+      <h1> Map Generator </h1>
 
       <a download="image.png">
-        <button id="download-image-button" onclick="onDownloadClicked(this.parentNode)" > Download Image </button>
+        <img class="options-btn" src="img/download.png" onclick="onDownloadClicked(this.parentNode)" title="Download the current image" ></img>
       </a>
 
-      <button id="source-button" onclick="onSourceClicked()"> Source Code </buton>
-
-      <button id="new-map-button" onclick="onNewMapClicked()"> Generate new map </button>
+      <img class="options-btn" src="img/code.png" onclick="onSourceClicked()" title="View the source code"></img>
     </div>
 
-    <div id="settings-container">
-      <h3> Settings </h3>
-
-      <div class="settings-row">
-        <p class="item"> Resolution </p>
-        <input class="item" type="number" id="grid-size-input" value=8 min=6 max=16 >
+    <div id="wrapper">
+      <div id="map-container">
+        <img id="image" title"Click To View Image" onclick="onCanvasClicked()" width="514" height="514"></img>
+        <img id="new-map-button" src="img/new.png" onclick="onNewMapClicked()"></img>
       </div>
 
-      <div class="settings-row">
-        <p class="item"> Smoothness </p>
-        <input class="item" type="range" id="grid-heightoffset-input" min=2 max=7 value=3 step=0.5>
-      </div>
+      <div id="settings-container">
+        <h3> Settings </h3>
 
-      <div class="settings-row">
-        <p class="item"> Island Area </p>
-        <input class="item" type="range" id="grid-falloffarea-input" min=1 max=5 value=3 step=0.05>
-      </div>
+        <div id="settings-main">
+          <div class="settings-row">
+            <p class="item"> Resolution </p>
+            <input class="item" type="number" id="grid-size-input" value=8 min=6 max=16 >
+          </div>
 
-      <div class="settings-row">
-        <p class="item"> Surrounding Gradient</p>
-        <input class="item" type="range" id="grid-falloffgradient-input" min=1 max=5 value=3 step=0.05>
-      </div>
+          <div class="settings-row">
+            <p class="item"> Smoothness </p>
+            <input class="item" type="range" id="grid-heightoffset-input" min=2 max=7 value=3 step=0.5>
+          </div>
 
-      <div class="settings-row">
-        <p class="item"> Show contour lines</p>
-        <input class="item" type="checkbox" id="grid-gradientmode-input" checked="false">
+          <div class="settings-row">
+            <p class="item"> Island Area </p>
+            <input class="item" type="range" id="grid-falloffarea-input" min=1 max=5 value=3 step=0.05>
+          </div>
+
+          <div class="settings-row">
+            <p class="item"> Surrounding Gradient</p>
+            <input class="item" type="range" id="grid-falloffgradient-input" min=1 max=5 value=3 step=0.05>
+          </div>
+
+          <div class="settings-row">
+            <p class="item"> Contour map mode </p>
+            <input class="item" type="checkbox" id="grid-gradientmode-input" value="false">
+          </div>
+        </div>
       </div>
-      
     </div>
 
     <script src="utils.js"></script>

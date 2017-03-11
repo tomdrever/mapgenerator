@@ -1,22 +1,101 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
+
+html, body { 
+  width: 100%;
+  height: 100%;
+  margin: 0;
+} 
+
 body {
+  font-family: 'Roboto Condensed', sans-serif;
   overflow-x: hidden;
+
+  max-width: none !important;
+  background-color: #f6f6f6;
+  line-height: 1 !important;
+
+  display: flex; 
+  flex-direction: column;
+}
+
+#toolbar {
+  position: relative;
+  padding: 0.5em;
+
+  background-color: #263238;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+
+  z-index: 5;
+
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+  align-items:center;
+}
+
+#toolbar h1 {
+  color: #F5F5F5;
+  font-size: 1.2em;
+  padding: 0.4em;
+  margin: 0;
+  flex: 1;
+  float: none;
+  text-align: left;
+}
+
+#wrapper {
+  position: relative;
+  flex-direction: row;
+  display: flex;
+  justify-content:flex-end;
+  width: 100%;
+  height: 100%;
+
+  flex-grow: 1;
 }
 
 #map-container {
   position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-flow: column;
+  flex: 1;
+  flex-grow: 6;
+
+  display:flex;
+  justify-content:center;
+  align-items:center;
 }
 
 #settings-container {
-  margin: 0 auto;
-  display: table;
+  position: relative;
+  flex: 2;
+  background: #546E7A;
+}
+
+#settings-container p {
+  color: #F5F5F5;
+  font-size: 1rem;
+}
+
+#settings-container h3 {
+  color: #F5F5F5;
+  margin: 0;
+  padding: 0.5em 0;
+
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  z-index: 4;
+
+  text-align: center;
+  background-color: #37474F;
+}
+
+#settings-main {
+  display: flex;
+  flex-direction: column;
 }
 
 .settings-row {
-  display: table-row;
+  padding: 0 1em;
+  display: flex;
+  flex-direction: row;
 }
 
 .settings-row input {
@@ -24,40 +103,43 @@ body {
 }
 
 .settings-row .item {
-  display: table-cell;
+  padding: 0 auto;
 }
 
 #image {
   background-color: gray;
   cursor: pointer;
   image-rendering: pixelated;
+  margin: auto;
 }
 
-#download-image-button {
-  position: absolute;
-  width: 10em;
+.options-btn {
+  cursor: pointer;
+  margin: 0;
+  margin-left: 0.5em;
+  width: 2em;
   height: 2em;
-  top: 0;
-  right: 0;
-}
-
-#source-button {
-  position: absolute;
-  width: 10em;
-  height: 2em;
-  top: 3em;
-  right: 0;
-}
+  outline: none;
+ }
 
 #new-map-button {
-  width: 12em;
-  height: 2em;
-  font-size: 1.6rem;
-  margin: 1em;
+  width: 2.4em;
+  height: 2.4em;
+  
+  border-radius: 1.6em;
+  padding: 0.4em;
+  background: #f44336;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  
+  z-index: 5;
+  position: absolute;
+  right: -1.6em;
+  bottom: 1em;
 }
 
 #processing_wrapper {
-  position:fixed;
+  position: fixed;
   top: 50%;
   left: 50%;
   z-index: 5;
