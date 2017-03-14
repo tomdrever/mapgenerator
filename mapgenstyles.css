@@ -37,7 +37,7 @@ body {
 #toolbar h1 {
   color: #F5F5F5;
   font-size: 1.2em;
-  padding: 0.4em;
+  padding: 0.5em;
   margin: 0;
   flex: 1;
   float: none;
@@ -79,7 +79,7 @@ body {
 #settings-container h3 {
   color: #F5F5F5;
   margin: 0;
-  padding: 0.5em 0;
+  padding: 0.8em 0;
 
   box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
   z-index: 4;
@@ -108,8 +108,7 @@ body {
 }
 
 #image {
-  width: 28em;
-  height: 28em;
+  width: 50%;
 
   background-color: gray;
   cursor: pointer;
