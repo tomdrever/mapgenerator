@@ -58,6 +58,22 @@ body {
   flex-grow: 1;
 }
 
+@media (max-width: 980px) {
+  #wrapper {display: block; }
+
+  #new-map-wrapper {
+    position: fixed !important;
+
+    width: 8em !important;
+    height: 8em !important;
+
+    border-radius: 4.4em !important;
+
+    bottom: 1.5em !important;
+    right: 1.5em !important;
+  }
+}
+
 #map-container {
   position: relative;
   flex: 1;
@@ -129,10 +145,9 @@ body {
   outline: none;
  }
 
-/* Should be absolute, larger and in the lower right corner of the screen. */
 #new-map-button {
-  width: 2.4em;
-  height: 2.4em;
+  width: 100%;
+  height: 100%;
 }
 
 .loading {
