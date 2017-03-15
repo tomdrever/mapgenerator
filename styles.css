@@ -72,6 +72,23 @@ body {
     bottom: 1.5em !important;
     right: 1.5em !important;
   }
+
+  #settings-container {
+    background-color: #f6f6f6 !important;
+    padding: 0 20%;
+  }
+
+  #settings-container p {
+    color: #263238 !important;
+    font-size: 2.5rem !important;
+  }
+
+  #settings-container h3 {
+    font-size: 4rem !important;
+    color: #263238 !important;
+    background-color: #f6f6f6 !important;
+    box-shadow: none !important;
+  }
 }
 
 #map-container {
