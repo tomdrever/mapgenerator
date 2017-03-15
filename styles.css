@@ -1,8 +1,8 @@
 @import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
 
-html, body { 
-  width: 100%;
+html, body {
   height: 100%;
+  min-width: 100%;
   margin: 0;
 } 
 
@@ -10,6 +10,8 @@ body {
   font-family: 'Roboto Condensed', sans-serif;
   overflow-x: hidden;
   overflow-y: hidden;
+
+  position: fixed;
 
   max-width: none !important;
   background-color: #f6f6f6;
@@ -19,6 +21,7 @@ body {
   flex-direction: column;
 }
 
+/* This and containing text are larger on mobile */
 #toolbar {
   position: relative;
   padding: 0.5em;
@@ -65,6 +68,7 @@ body {
   align-items:center;
 }
 
+/* Settings are styled beneath map - might have to change wrapper flex. Styled differently */
 #settings-container {
   position: relative;
   flex: 2;
@@ -125,19 +129,20 @@ body {
   outline: none;
  }
 
+/* Should be absolute, larger and in the lower right corner of the screen. */
 #new-map-button {
   width: 2.4em;
   height: 2.4em;
 }
 
 .loading {
-  -webkit-animation-name: rotate; 
-  -webkit-animation-duration: 0.5s; 
-  -webkit-animation-iteration-count: infinite;
-  -webkit-transition-timing-function: linear;
+  animation-name: rotate; 
+  animation-duration: 0.5s; 
+  animation-iteration-count: infinite;
+  transition-timing-function: linear;
 }
 
-@-webkit-keyframes rotate {
+@keyframes rotate {
   from {
     -webkit-transform: rotate(0deg);
   }
