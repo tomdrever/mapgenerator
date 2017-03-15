@@ -7,7 +7,8 @@ var gridSizeInput = document.getElementById("grid-size-input")
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
 var falloffGradientInput = document.getElementById("grid-falloffgradient-input")
 var falloffAreaInput = document.getElementById("grid-falloffarea-input")
-var gradientModeInput = document.getElementById("grid-gradientmode-input")
+var contourModeInput = document.getElementById("grid-contourmode-input")
+var outlineModeInput = document.getElementById("grid-outlinemode-input")
 
 newMap();
 
@@ -23,6 +24,10 @@ function onNewMapClicked() {
   newMap();
 }
 
+function onContourModeClicked() {
+  outlineModeInput.disabled = contourModeInput.checked;
+}
+
 function onCanvasClicked() {
   var newWindow = window.open("about:blank", "_blank")
   newWindow.document.write("<hmtl><head><title>Map Image</title><head><img style='image-rendering: pixelated; width: 100em; height: 100em;' src={0}></img></html>".format(image.src))
@@ -35,7 +40,12 @@ function newMap() {
   canvas.setAttribute("width", gridSize);
   canvas.setAttribute("height", gridSize);
 
-  var mapGenSettings = new MapGenSettings(gridHeightOffsetInput.value, falloffGradientInput.value, falloffAreaInput.value, gradientModeInput.checked)
+  var mapGenSettings = new MapGenSettings(
+    gridHeightOffsetInput.value, 
+    falloffGradientInput.value, 
+    falloffAreaInput.value, 
+    contourModeInput.checked, 
+    outlineModeInput.checked)
 
   setTimeout(function() {
     getMap(context, gridSize, mapGenSettings);

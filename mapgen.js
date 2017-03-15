@@ -1,9 +1,10 @@
 class MapGenSettings {
-  constructor(heightOffset, falloffGradient, falloffArea, gradientMode) {
+  constructor(heightOffset, falloffGradient, falloffArea, contourMode, outlineMode) {
     this.heightOffset = heightOffset
     this.falloffGradient = falloffGradient
     this.falloffArea = falloffArea
-    this.gradientMode = gradientMode
+    this.contourMode = contourMode
+    this.outlineMode = outlineMode
   }
 }
 
@@ -138,13 +139,17 @@ function getMap(context, size, settings) {
   var imageData = context.getImageData(0, 0, size, size);
   var buffer = new Uint8ClampedArray(size * size * 4);
 
-  if (!settings.gradientMode)
+  if (settings.contourMode)
   {
-    getColourMap(buffer, size, dsMap, falloffMap);
+    getContourMap(buffer, size, dsMap, falloffMap);
+  }
+  else if (settings.outlineMode)
+  {
+    getOutlineMap(buffer, size, dsMap, falloffMap);
   }
   else
   {
-    getContourMap(buffer, size, dsMap, falloffMap);
+    getColourMap(buffer, size, dsMap, falloffMap);
   }
 
   imageData.data.set(buffer);
@@ -162,9 +167,34 @@ function setBufferColourAtPosition(buffer, colour, x, y, size) {
   buffer[pos + 3] = 255;
 }
 
+function getOutlineMap(buffer, size, dsMap, falloffMap)
+{
+  var previousKey = 0.05;
+
+  for (var x = 0; x < size; x++) {
+    for (var y = 0; y < size; y++) {
+      var DSvalue = clamp(dsMap[x][y] - falloffMap[x][y], 0.0, 1.0);
+
+      var terrainMapKey = getTerrainMapKey(DSvalue);
+
+      var colour = [];
+
+      // If this is a new "strata?" "level?"
+      if (terrainMapKey == previousKey) {
+        colour = terrainMap[terrainMapKey];
+      } else {
+        colour = [21, 21, 18];
+      }
+
+      setBufferColourAtPosition(buffer, colour, x, y, size);
+
+      previousKey = terrainMapKey;
+    }
+  }
+}
+
 function getContourMap(buffer, size, dsMap, falloffMap)
 {
-  
   var previousKey = 0.05;
 
   for (var x = 0; x < size; x++) {
@@ -200,9 +230,7 @@ function getColourMap(buffer, size, dsMap, falloffMap) {
 
       terrainMapKey = getTerrainMapKey(DSvalue);
 
-      if (colour != terrainMap[terrainMapKey]) {
-        colour = terrainMap[terrainMapKey]
-      }
+      colour = terrainMap[terrainMapKey];
 
       setBufferColourAtPosition(buffer, colour, x, y, size);
     }
