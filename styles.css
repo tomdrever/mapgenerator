@@ -137,15 +137,12 @@ body {
 .settings-row {
   padding: 0 1em;
   display: flex;
+  align-items: center;
   flex-direction: row;
 }
 
 .settings-row input {
-  margin: 1.2em;
-}
-
-.settings-row .item {
-  padding: 0 auto;
+  margin-left: 1em;
 }
 
 #image {
