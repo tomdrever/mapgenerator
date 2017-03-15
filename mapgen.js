@@ -12,19 +12,22 @@ var terrainMap = new Map()
 // Deep Ocean
 terrainMap[0.05] = [31, 3, 168]
 // Ocean
-terrainMap[0.35] = [15, 144, 199]
+terrainMap[0.15] = [15, 144, 199]
 // Beach/Shore
-terrainMap[0.40] = [217, 219, 141]
+terrainMap[0.25] = [217, 219, 141]
 // Lowest/grassland/forest/etc
-terrainMap[0.45] = [99, 196, 0]
+terrainMap[0.40] = [99, 196, 0]
 // Low/grassland/forest/etc
-terrainMap[0.55] = [0, 127, 20]
+terrainMap[0.65] = [0, 127, 20]
 // Hills/rocky/high terrain
-terrainMap[0.70] = [100, 82, 29]
+terrainMap[0.80] = [100, 82, 29]
 // Mountains/highest terrain
-terrainMap[0.85] = [100, 83, 64]
+terrainMap[0.95] = [100, 83, 64]
 
 function generateDiamondSquare(size, heightOffset) {
+  // heightOffset is a number by which (alongside another random number) the height island
+  // is modified. it correlates to smoothness
+
   // Create an empty grid
 	var data = new Array(size);
 	for (var i = 0; i < size; i++) {
@@ -139,13 +142,9 @@ function getMap(context, size, settings) {
   var imageData = context.getImageData(0, 0, size, size);
   var buffer = new Uint8ClampedArray(size * size * 4);
 
-  if (settings.contourMode)
+  if (settings.contourMode | settings.outlineMode)
   {
-    getContourMap(buffer, size, dsMap, falloffMap);
-  }
-  else if (settings.outlineMode)
-  {
-    getOutlineMap(buffer, size, dsMap, falloffMap);
+    getContourMap(buffer, size, dsMap, falloffMap, settings.outlineMode);
   }
   else
   {
@@ -193,7 +192,7 @@ function getOutlineMap(buffer, size, dsMap, falloffMap)
   }
 }
 
-function getContourMap(buffer, size, dsMap, falloffMap)
+function getContourMap(buffer, size, dsMap, falloffMap, fillColour)
 {
   var previousKey = 0.05;
 
@@ -207,7 +206,11 @@ function getContourMap(buffer, size, dsMap, falloffMap)
 
       // If this is a new "strata?" "level?"
       if (terrainMapKey == previousKey) {
-        colour = [217, 213, 184];
+        if (fillColour) {
+          colour = terrainMap[terrainMapKey];
+        } else {
+          colour = [217, 213, 184];
+        }
       } else {
         colour = [21, 21, 18];
       }
