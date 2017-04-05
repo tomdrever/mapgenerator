@@ -32,77 +32,74 @@ function generateDiamondSquare(size, heightOffset) {
   // is modified. it correlates to smoothness
 
   // Create an empty grid, an array of arrays (size * size)
-	var data = new Array(size);
-	for (var i = 0; i < size; i++) {
-		data[i] = new Array(size);
+  var data = new Array(size);
+  for (var i = 0; i < size; i++) {
+    data[i] = new Array(size);
 
     for (var j = 0; j < size; j++) {
       // Initial the values in the grid as 0
       data[i][j] = 0;
     }
-	}
+  }
 
-	// Seed the data: set the top left, top right, bottom left and bottom right values to 0.5 - this
+  // Seed the data: set the top left, top right, bottom left and bottom right values to 0.5 - this
   // gives the algorithm a place to start on its first "Square" phase
-	data[0][0] = data[0][size - 1] = data[size - 1][0] = data[size -1][size - 1] = 0.5;
+  data[0][0] = data[0][size - 1] = data[size - 1][0] = data[size -1][size - 1] = 0.5;
 
   // This iterates the algorithm (based on smoothness), increasing the "depth",
   // so it starts with one big square/diamond, and gets smaller and smaller.
   // This is why a higher resolution image is basically the same as a lower one, 
   // except expressed in more details, with more pixels 
-	for (var sideLength = size - 1; sideLength >= 2; sideLength /= 2, heightOffset /= 2.0) {
-		var halfSide = sideLength / 2;
+  for (var sideLength = size - 1; sideLength >= 2; sideLength /= 2, heightOffset /= 2.0) {
+    var halfSide = sideLength / 2;
 
     // -- Square -- 
-		for (var x = 0; x < size - 1; x += sideLength) {
-		    for (var y = 0; y < size - 1; y += sideLength) {
+    for (var x = 0; x < size - 1; x += sideLength) {
+      for (var y = 0; y < size - 1; y += sideLength) {
 
-            // Get the average of the four surrounding corners
-		        var avg = data[x][y] +
-                data[x + sideLength][y] +
-                data[x][y + sideLength] +
-                data[x + sideLength][y + sideLength];
-		        avg /= 4.0;
+        // Get the average of the four surrounding corners
+        var avg = data[x][y] +
+          data[x + sideLength][y] +
+          data[x][y + sideLength] +
+          data[x + sideLength][y + sideLength];
+        avg /= 4.0;
 
-            // Add a "random" offset
-            avg += (Math.random() * 2 * heightOffset) - heightOffset;
+        // Add a "random" offset
+        avg += (Math.random() * 2 * heightOffset) - heightOffset;
 
-            // Clamp between 0 and 1
-            avg = clamp(avg, 0.0, 1.0)
+        // Clamp between 0 and 1
+        avg = clamp(avg, 0.0, 1.0)
 
-            // Set the square value to the average + a random number affected by the smoothness
-		        data[x + halfSide][y + halfSide] = avg
-		    }
-		}
+        // Set the square value to the average + a random number affected by the smoothness
+        data[x + halfSide][y + halfSide] = avg
+      }
+    }
 
     // -- Diamond --
-		for (var x = 0; x < size - 1; x += halfSide) {
-		    for (var y = (x + halfSide) % sideLength; y < size - 1; y += sideLength) {
+    for (var x = 0; x < size - 1; x += halfSide) {
+      for (var y = (x + halfSide) % sideLength; y < size - 1; y += sideLength) {
+        // Get the average of the four points on the diamond
+        var avg = data[(x - halfSide + size - 1) % (size - 1)][y] +
+          data[(x + halfSide) % (size - 1)][y] +
+          data[x][(y + halfSide) % (size - 1)] +
+          data[x][(y - halfSide + size - 1) % (size - 1)];
+	      avg /= 4.0;
 
-            // Get the average of the four points on the diamond
-		        var avg =
-                    data[(x - halfSide + size - 1) % (size - 1)][y] +
-                    data[(x + halfSide) % (size - 1)][y] +
-                    data[x][(y + halfSide) % (size - 1)] +
-                    data[x][(y - halfSide + size - 1) % (size - 1)];
-		        avg /= 4.0;
+        // Add a "random" offset
+        avg += (Math.random() * 2 * heightOffset) - heightOffset;
 
-            // Add a "random" offset
-		        avg += (Math.random() * 2 * heightOffset) - heightOffset;
+        // Clamp between 0 and 1
+        avg = clamp(avg, 0.0, 1.0)
 
-            // Clamp between 0 and 1
-            avg = clamp(avg, 0.0, 1.0)
+        data[x][y] = avg;
 
-		        data[x][y] = avg;
-
-            // Wrap the values
-		        if (x == 0) data[size - 1][y] = avg;
-		        if (y == 0) data[x][size - 1] = avg;
-		    }
-		}
-	}
-
-	return data;
+        // Wrap the values
+        if (x == 0) data[size - 1][y] = avg;
+        if (y == 0) data[x][size - 1] = avg;
+      }
+    }
+  }
+  return data;
 }
 
 // Credit Sebastian Lague for falloffMap
