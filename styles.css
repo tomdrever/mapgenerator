@@ -152,7 +152,7 @@ body {
 #image {
   width: 50%;
 
-  background-color: gray;
+  background-color: white;
   cursor: pointer;
   image-rendering: pixelated;
   margin: auto;

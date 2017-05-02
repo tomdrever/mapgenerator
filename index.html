@@ -25,7 +25,7 @@
         <img id="image" title"Click To View Image" onclick="onCanvasClicked()"></img>
 
         <div id="new-map-wrapper">
-          <img id="new-map-button" src="img/new.png" onclick="onNewMapClicked()"></img>
+          <img id="new-map-button" src="img/new.png" onclick="newMap()"></img>
         </div>
       </div>
 
@@ -51,11 +51,6 @@
           <div class="settings-row">
             <p class="item"> Surrounding Gradient</p>
             <input class="item" type="range" id="grid-falloffgradient-input" min=1 max=5 value=3 step=0.05>
-          </div>
-
-          <div class="settings-row">
-            <p class="item"> Contour map mode </p>
-            <input class="item" type="checkbox" id="grid-contourmode-input" value="false" onchange="onContourModeClicked()">
           </div>
 
           <div class="settings-row">

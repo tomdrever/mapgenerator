@@ -9,7 +9,6 @@ var gridSizeInput = document.getElementById("grid-size-input");
 var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input");
 var falloffGradientInput = document.getElementById("grid-falloffgradient-input");
 var falloffAreaInput = document.getElementById("grid-falloffarea-input");
-var contourModeInput = document.getElementById("grid-contourmode-input");
 var outlineModeInput = document.getElementById("grid-outlinemode-input");
 
 // Generate an initial map when the page first loads
@@ -24,15 +23,6 @@ function onSourceClicked() {
 function onDownloadClicked(link) {
   // Get the source of the current displayed map and download it
   link.href = image.src;
-}
-
-function onNewMapClicked() {
-  newMap();
-}
-
-function onContourModeClicked() {
-  // Toggle contour mode
-  outlineModeInput.disabled = contourModeInput.checked;
 }
 
 function onCanvasClicked() {
@@ -57,8 +47,7 @@ function newMap() {
   var mapGenSettings = new MapGenSettings(
     gridHeightOffsetInput.value, 
     falloffGradientInput.value, 
-    falloffAreaInput.value, 
-    contourModeInput.checked, 
+    falloffAreaInput.value,
     outlineModeInput.checked)
 
   // In about 50ms... (this is to make sure the loading animation has time to play)

@@ -23,6 +23,11 @@ function clamp(number, min, max) {
   return Math.min(Math.max(number, min), max);
 }
 
+function scale(number, oldMin, oldMax, newMin, newMax) {
+  var oldRange = (oldMax - oldMin); 
+  var newRange = (newMax - newMin);
+  return (((number - oldMin) * newRange) / oldRange) + newMin;
+}
 
 // Creates a simple grid (jagged array)
 function createGrid(size) {
