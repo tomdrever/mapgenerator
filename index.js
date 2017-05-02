@@ -5,12 +5,12 @@ var context = canvas.getContext('2d');
 var image = document.getElementById("image");
 
 // Get option inputs
-var gridSizeInput = document.getElementById("grid-size-input")
-var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input")
-var falloffGradientInput = document.getElementById("grid-falloffgradient-input")
-var falloffAreaInput = document.getElementById("grid-falloffarea-input")
-var contourModeInput = document.getElementById("grid-contourmode-input")
-var outlineModeInput = document.getElementById("grid-outlinemode-input")
+var gridSizeInput = document.getElementById("grid-size-input");
+var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input");
+var falloffGradientInput = document.getElementById("grid-falloffgradient-input");
+var falloffAreaInput = document.getElementById("grid-falloffarea-input");
+var contourModeInput = document.getElementById("grid-contourmode-input");
+var outlineModeInput = document.getElementById("grid-outlinemode-input");
 
 // Generate an initial map when the page first loads
 newMap();
@@ -18,12 +18,12 @@ newMap();
 // -- Set button onclicks --
 function onSourceClicked() {
   // Open a new window/tab containing the github page
-  window.open("https://www.github.com/tomdrever/mapgenerator", "_blank")
+  window.open("https://www.github.com/tomdrever/mapgenerator", "_blank");
 }
 
 function onDownloadClicked(link) {
   // Get the source of the current displayed map and download it
-  link.href = image.src
+  link.href = image.src;
 }
 
 function onNewMapClicked() {
@@ -44,7 +44,7 @@ function onCanvasClicked() {
 function newMap() {
   // Get the size of the map grid, using the grid-size (resolution) input
   // and the formula size = 2^n +1
-  var gridSize =  Math.pow(2, gridSizeInput.value) + 1
+  var gridSize =  Math.pow(2, gridSizeInput.value) + 1;
 
   // Trigger the buttons "loading" animation
   document.getElementById("new-map-button").className = "loading";
@@ -65,7 +65,7 @@ function newMap() {
   setTimeout(function() {
     // Get a new map from the mapgen.js script (this is displayed on the off-screen
     // canvas)
-    getMap(context, gridSize, mapGenSettings);
+    createMap(context, gridSize, mapGenSettings);
 
     // Load the image on the off-screen canvas to the main img
     image.src = canvas.toDataURL(); 

@@ -10,7 +10,7 @@ if (!String.prototype.format) {
 
 // Simple rounding
 function round(num, dp) {
-  return Math.round(num * dp) / dp
+  return Math.round(num * dp) / dp;
 }
 
 // Simple rng - TODO - use seed?
@@ -21,4 +21,21 @@ function random(min, max) {
 // Simple clamp function
 function clamp(number, min, max) {
   return Math.min(Math.max(number, min), max);
+}
+
+
+// Creates a simple grid (jagged array)
+function createGrid(size) {
+  var grid = new Array(size);
+
+  for (var i = 0; i < size; i++) {
+    grid[i] = new Array(size);
+
+    for (var j = 0; j < size; j++) {
+      // Initial the values in the grid as 0
+      grid[i][j] = 0;
+    }
+  }
+
+  return grid;
 }

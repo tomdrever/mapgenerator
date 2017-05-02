@@ -1,15 +1,14 @@
 // -- A simple class to store the current options --
-class MapGenSettings {
-  constructor(heightOffset, falloffGradient, falloffArea, contourMode, outlineMode) {
-    this.heightOffset = heightOffset
-    this.falloffGradient = falloffGradient
-    this.falloffArea = falloffArea
-    this.contourMode = contourMode
-    this.outlineMode = outlineMode
-  }
+function MapGenSettings(heightOffset, falloffGradient, falloffArea, contourMode, outlineMode) {
+  this.heightOffset = heightOffset;
+  this.falloffGradient = falloffGradient;
+  this.falloffArea = falloffArea;
+  this.contourMode = contourMode;
+  this.outlineMode = outlineMode;
 }
 
-// -- TerrainMap is a map of a value (from the DS algorithm) to a colour
+// -- TerrainMap is a map of a value (from the DS algorithm) to a colour,
+// representing a different height of terrain --
 var terrainMap = new Map()
 // Deep Ocean
 terrainMap[0.05] = [31, 3, 168]
@@ -26,92 +25,102 @@ terrainMap[0.80] = [100, 82, 29]
 // Mountains/highest terrain
 terrainMap[0.95] = [100, 83, 64]
 
-// -- Main DS function -- 
-function generateDiamondSquare(size, heightOffset) {
-  // heightOffset is a number by which (alongside another random number) the height island
+function DiamondSquare(size, heightOffset) {
+  // heightOffset is a number by which (alongside another random number) the height each tile of island
   // is modified. it correlates to smoothness
+  this.size = size;
+  this.heightOffset = heightOffset;
 
   // Create an empty grid, an array of arrays (size * size)
-  var data = new Array(size);
-  for (var i = 0; i < size; i++) {
-    data[i] = new Array(size);
+  this.data = createGrid(size);
+}
 
-    for (var j = 0; j < size; j++) {
-      // Initial the values in the grid as 0
-      data[i][j] = 0;
-    }
-  }
-
-  // Seed the data: set the top left, top right, bottom left and bottom right values to 0.5 - this
-  // gives the algorithm a place to start on its first "Square" phase
-  data[0][0] = data[0][size - 1] = data[size - 1][0] = data[size -1][size - 1] = 0.5;
-
-  // This iterates the algorithm (based on smoothness), increasing the "depth",
-  // so it starts with one big square/diamond, and gets smaller and smaller.
-  // This is why a higher resolution image is basically the same as a lower one, 
-  // except expressed in more details, with more pixels 
-  for (var sideLength = size - 1; sideLength >= 2; sideLength /= 2, heightOffset /= 2.0) {
+DiamondSquare.prototype = {
+  diamond:function(x, y, sideLength) {
     var halfSide = sideLength / 2;
 
-    // -- Square -- 
-    for (var x = 0; x < size - 1; x += sideLength) {
-      for (var y = 0; y < size - 1; y += sideLength) {
+    // Get the average of the four points on the diamond (wrapping
+    // if necessary)
+    var avg = this.data[(x - halfSide + this.size - 1) % (this.size - 1)][y] +
+      this.data[(x + halfSide) % (this.size - 1)][y] +
+      this.data[x][(y + halfSide) % (this.size - 1)] +
+      this.data[x][(y - halfSide + this.size - 1) % (this.size - 1)];
+	  avg /= 4.0;
 
-        // Get the average of the four surrounding corners
-        var avg = data[x][y] +
-          data[x + sideLength][y] +
-          data[x][y + sideLength] +
-          data[x + sideLength][y + sideLength];
-        avg /= 4.0;
+    // Add a "random" offset
+    avg += (Math.random() * 2 * this.heightOffset) - this.heightOffset;
 
-        // Add a "random" offset
-        avg += (Math.random() * 2 * heightOffset) - heightOffset;
+    // Clamp between 0 and 1
+    avg = clamp(avg, 0.0, 1.0)
 
-        // Clamp between 0 and 1
-        avg = clamp(avg, 0.0, 1.0)
+    this.data[x][y] = avg;
 
-        // Set the square value to the average + a random number affected by the smoothness
-        data[x + halfSide][y + halfSide] = avg
+    // Wrap the values
+    if (x == 0) this.data[this.size - 1][y] = avg;
+    if (y == 0) this.data[x][this.size - 1] = avg;
+  },
+
+  square:function(x, y, sideLength) {
+    var halfSide = sideLength / 2;
+
+    // Get the average of the four surrounding corners
+    var avg = this.data[x][y] +
+      this.data[x + sideLength][y] +
+      this.data[x][y + sideLength] +
+      this.data[x + sideLength][y + sideLength];
+    avg /= 4.0;
+
+    // Add a "random" offset
+    avg += (Math.random() * 2 * this.heightOffset) - this.heightOffset;
+
+    // Clamp between 0 and 1
+    avg = clamp(avg, 0.0, 1.0);
+
+    // Set the square value to the average + a random number affected by the smoothness
+    this.data[x + halfSide][y + halfSide] = avg;
+  },
+
+  // -- Main DS function -- 
+  generate:function() {
+    // Seed the data: set the top left, top right, bottom left and bottom right values to 0.5 - this
+    // gives the algorithm a place to start on its first "Square" phase
+    this.data[0][0] = this.data[0][this.size - 1] = this.data[this.size - 1][0] 
+      = this.data[this.size -1][this.size - 1] = 0.5;
+
+    // This iterates the algorithm (based on smoothness), increasing the "depth",
+    // so it starts with one big square/diamond, and gets smaller and smaller.
+    // This is why a higher resolution image is basically the same as a lower one, 
+    // except expressed in more details, with more pixels 
+    for (var sideLength = this.size - 1; sideLength >= 2; sideLength /= 2, this.heightOffset /= 2.0) {
+      // -- Square -- 
+      for (var x = 0; x < this.size - 1; x += sideLength) {
+        for (var y = 0; y < this.size - 1; y += sideLength) {
+          this.square(x, y, sideLength);
+        }
+      }
+
+      // -- Diamond --
+      for (var x = 0; x < this.size - 1; x += sideLength / 2) {
+        for (var y = (x + sideLength / 2) % sideLength; y < this.size - 1; y += sideLength) {
+          this.diamond(x, y, sideLength);
+        }
       }
     }
 
-    // -- Diamond --
-    for (var x = 0; x < size - 1; x += halfSide) {
-      for (var y = (x + halfSide) % sideLength; y < size - 1; y += sideLength) {
-        // Get the average of the four points on the diamond
-        var avg = data[(x - halfSide + size - 1) % (size - 1)][y] +
-          data[(x + halfSide) % (size - 1)][y] +
-          data[x][(y + halfSide) % (size - 1)] +
-          data[x][(y - halfSide + size - 1) % (size - 1)];
-	      avg /= 4.0;
-
-        // Add a "random" offset
-        avg += (Math.random() * 2 * heightOffset) - heightOffset;
-
-        // Clamp between 0 and 1
-        avg = clamp(avg, 0.0, 1.0)
-
-        data[x][y] = avg;
-
-        // Wrap the values
-        if (x == 0) data[size - 1][y] = avg;
-        if (y == 0) data[x][size - 1] = avg;
-      }
-    }
+    return this.data;
   }
-  return data;
 }
 
 // Credit Sebastian Lague for falloffMap
+// Evaluates a value from the fall-off map grid
 function evaluateFalloffValue(value, gradient, area) {
   // a - Lower a means more gradual fall-off
-  var a = gradient
+  var a = gradient;
 
   // b - lower b means less space for island
-  var b = area
+  var b = area;
 
-  // TODO - get formula from video
-  return Math.pow(value, a) / (Math.pow(value, a) + Math.pow(b - b * value, a))
+  return Math.pow(value, a) / (Math.pow(value, a) + Math.pow(b - b * value, a));
 }
 
 // Generates a fall-off map, a gradual slope towards the sides.
@@ -131,7 +140,6 @@ function generateFalloffMap(size, gradient, area) {
 
       // Use fancy math to determine the fall-off value for this position on the map
       var value = Math.max(Math.abs(x), Math.abs(y))
-
       grid[i][j] = evaluateFalloffValue(value, gradient, area)
     }
   }
@@ -141,9 +149,9 @@ function generateFalloffMap(size, gradient, area) {
 
 // -- Function that actually gets a grid of values, then gets a grid of colours, then
 // prints it to the off-screen canvas --
-function getMap(context, size, settings) {
+function createMap(context, size, settings) {
   // Generate the required maps
-  var dsMap = generateDiamondSquare(size, settings.heightOffset)
+  var dsMap = new DiamondSquare(size, settings.heightOffset).generate()
   var falloffMap = generateFalloffMap(size, settings.falloffGradient, settings.falloffArea)
 
   // Get the imagedata of the canvas (for drawing to it by changing the buffer)
@@ -246,9 +254,8 @@ function getColourMap(buffer, size, dsMap, falloffMap) {
     for (var y = 0; y < size; y++) {
       // Map the noise values generated by the Diamond-Square algorithm to rgb colours
       var DSvalue = clamp(dsMap[x][y] - falloffMap[x][y], 0.0, 1.0);
-      
-      // Uncomment to test fall-off
-      //var DSvalue = falloffMap[x][y]
+
+      DSvalue = falloffMap[x][y]
 
       terrainMapKey = getTerrainMapKey(DSvalue);
 
