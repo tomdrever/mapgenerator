@@ -1,9 +1,10 @@
 // -- A simple class to store the current options --
-function MapGenSettings(heightOffset, falloffGradient, falloffArea, outlineMode) {
+function MapGenSettings(heightOffset, falloffGradient, falloffArea, outlineMode, extraColour) {
   this.heightOffset = heightOffset;
   this.falloffGradient = falloffGradient;
   this.falloffArea = falloffArea;
   this.outlineMode = outlineMode;
+  this.extraColour = extraColour;
 }
 
 // -- TerrainMap is a map of a value (from the DS algorithm) to a colour,
@@ -184,7 +185,12 @@ function createMap(context, size, settings) {
         colour = terrainMap[terrainMapKey];
       }
 
-      setBufferColourAtPosition(buffer, colour, x, y, size, scale(alphaDsMap[x][y], 0, 1, 0.5, 1) * 255);
+      var alpha = 255;
+      if (settings.extraColour) {
+        alpha = scale(alphaDsMap[x][y], 0, 1, 0.5, 1) * 255;
+      }
+
+      setBufferColourAtPosition(buffer, colour, x, y, size, alpha);
 
       previousKey = terrainMapKey;
     }

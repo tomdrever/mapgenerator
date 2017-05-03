@@ -10,6 +10,7 @@ var gridHeightOffsetInput = document.getElementById("grid-heightoffset-input");
 var falloffGradientInput = document.getElementById("grid-falloffgradient-input");
 var falloffAreaInput = document.getElementById("grid-falloffarea-input");
 var outlineModeInput = document.getElementById("grid-outlinemode-input");
+var extraColourInput = document.getElementById("grid-extracolour-input");
 
 // Generate an initial map when the page first loads
 newMap();
@@ -48,7 +49,8 @@ function newMap() {
     gridHeightOffsetInput.value, 
     falloffGradientInput.value, 
     falloffAreaInput.value,
-    outlineModeInput.checked)
+    outlineModeInput.checked,
+    extraColourInput.checked)
 
   // In about 50ms... (this is to make sure the loading animation has time to play)
   setTimeout(function() {
