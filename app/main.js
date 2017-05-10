@@ -1,3 +1,9 @@
+// The code in this file is taken from the Electron Quick-Start Tutorial:
+// https://electron.atom.io/docs/tutorial/quick-start/
+
+// Its only purpose is to let me build an Electron app from the code
+// in the previous directory
+
 const {app, BrowserWindow} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will

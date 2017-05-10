@@ -118,7 +118,7 @@ function FallOff(size, gradient, area) {
 }
 
 FallOff.prototype = {
-  // Credit Sebastian Lague for falloffMap
+  // Credit Sebastian Lague for falloffMap formula
   // Evaluates a value from the fall-off map grid
   evaluatePoint:function(value) {
     // a - Lower a means more gradual fall-off

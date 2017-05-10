@@ -1,4 +1,4 @@
-@import 'https://fonts.googleapis.com/css?family=Roboto+Condensed';
+@import 'https://fonts.googleapis.com/css?family=Lato';
 
 html, body {
   height: 100%;
@@ -7,7 +7,7 @@ html, body {
 } 
 
 body {
-  font-family: 'Roboto Condensed', sans-serif;
+  font-family: 'Lato', sans-serif;
   overflow-x: hidden;
   overflow-y: hidden;
 
